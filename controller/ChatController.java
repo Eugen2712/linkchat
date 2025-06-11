@@ -6,6 +6,10 @@ import com.practiceproject.linkchat_back.repository.ChatRepository;
 import com.practiceproject.linkchat_back.repository.ChatUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/chat")
+@Tag(name = "Chat API", description = "Operations related to chat data")
 public class ChatController {
     private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
@@ -30,6 +35,10 @@ public class ChatController {
         this.chatMessageRepository = chatMessageRepository;
     }
 
+    @Operation(summary = "Get chat data by chat identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Chat data retrieved")
+    })
     @GetMapping("/{chatId}")
     public ChatInfo getChatData(@PathVariable("chatId") long chatId) {
         logger.debug("Fetching chat data for {}", chatId);
