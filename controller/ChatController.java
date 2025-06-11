@@ -31,13 +31,8 @@ public class ChatController {
     }
 
     @GetMapping("/{chatId}")
-    public Map<String, Object> getChatData(@PathVariable("chatId") long chatId) {
+    public ChatInfo getChatData(@PathVariable("chatId") long chatId) {
         logger.debug("Fetching chat data for {}", chatId);
-        ChatInfo info = new ChatInfo(chatId, chatRepository, chatUserRepository, chatMessageRepository);
-        return Map.of(
-                "title", info.getTitle(),
-                "users", info.getUsers(),
-                "messages", info.getMessages()
-        );
+        return new ChatInfo(chatId, chatRepository, chatUserRepository, chatMessageRepository);
     }
 }
