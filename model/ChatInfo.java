@@ -12,6 +12,13 @@ public class ChatInfo {
     private List<User> users;
     private List<ChatMessage> messages;
 
+    /**
+     * Creates a new chat with default title {@code "New Chat"}.
+     */
+    public ChatInfo() {
+        this("New Chat");
+    }
+
     public ChatInfo(String title) {
         this.title = title;
         this.users = new ArrayList<>();
