@@ -14,6 +14,9 @@ public class Chat {
 
     private String users; // optional string column as per DB schema
 
+    @Column(name = "link")
+    private String link;
+
     public Chat() {}
 
     public Long getChatId() {
@@ -38,5 +41,13 @@ public class Chat {
 
     public void setUsers(String users) {
         this.users = users;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }
