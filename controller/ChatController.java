@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/chat")
 @Tag(name = "Chat API", description = "Operations related to chat data")
@@ -35,13 +33,13 @@ public class ChatController {
         this.chatMessageRepository = chatMessageRepository;
     }
 
-    @Operation(summary = "Get chat data by chat identifier")
+    @Operation(summary = "Get chat data by chat link")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Chat data retrieved")
     })
-    @GetMapping("/{chatId}")
-    public ChatInfo getChatData(@PathVariable("chatId") long chatId) {
-        logger.debug("Fetching chat data for {}", chatId);
-        return new ChatInfo(chatId, chatRepository, chatUserRepository, chatMessageRepository);
+    @GetMapping("/{link}")
+    public ChatInfo getChatData(@PathVariable("link") String link) {
+        logger.debug("Fetching chat data for {}", link);
+        return new ChatInfo(link, chatRepository, chatUserRepository, chatMessageRepository);
     }
 }

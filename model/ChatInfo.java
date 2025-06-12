@@ -4,6 +4,8 @@ import com.practiceproject.linkchat_back.repository.ChatMessageRepository;
 import com.practiceproject.linkchat_back.repository.ChatRepository;
 import com.practiceproject.linkchat_back.repository.ChatUserRepository;
 
+import com.practiceproject.linkchat_back.model.Chat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,15 +27,21 @@ public class ChatInfo {
         this.messages = new ArrayList<>();
     }
 
-    public ChatInfo(long chatId,
+    public ChatInfo(String link,
                     ChatRepository chatRepository,
                     ChatUserRepository chatUserRepository,
                     ChatMessageRepository messageRepository) {
-        this.title = chatRepository.findById(chatId)
-                .map(Chat::getTitle)
-                .orElse(null);
-        this.users = chatUserRepository.getChatUsers(chatId);
-        this.messages = messageRepository.getMessagesByChatId(chatId);
+        Chat chat = chatRepository.findByLink(link).orElse(null);
+        if (chat != null) {
+            long chatId = chat.getChatId();
+            this.title = chat.getTitle();
+            this.users = chatUserRepository.getChatUsers(chatId);
+            this.messages = messageRepository.getMessagesByChatId(chatId);
+        } else {
+            this.title = null;
+            this.users = new ArrayList<>();
+            this.messages = new ArrayList<>();
+        }
     }
 
     public String getTitle() {
